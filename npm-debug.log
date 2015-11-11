@@ -1,0 +1,448 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/nacho/.nvm/versions/node/v4.2.1/bin/node',
+1 verbose cli   '/Users/nacho/.nvm/versions/node/v4.2.1/bin/npm',
+1 verbose cli   'install' ]
+2 info using npm@2.14.7
+3 info using node@v4.2.1
+4 verbose readDependencies loading dependencies from /Users/nacho/Desastre/nodebindings/nodetk/package.json
+5 warn package.json nodetk@1.0.0 No description
+6 warn package.json nodetk@1.0.0 No repository field.
+7 warn package.json nodetk@1.0.0 No README data
+8 verbose install where, deps [ '/Users/nacho/Desastre/nodebindings/nodetk',
+8 verbose install   [ 'bindings', 'nan' ] ]
+9 verbose install where, peers [ '/Users/nacho/Desastre/nodebindings/nodetk', [] ]
+10 verbose installManyTop reading for lifecycle /Users/nacho/Desastre/nodebindings/nodetk/package.json
+11 info preinstall nodetk@1.0.0
+12 verbose readDependencies loading dependencies from /Users/nacho/Desastre/nodebindings/nodetk/package.json
+13 silly cache add args [ 'bindings@~1.2.1', null ]
+14 verbose cache add spec bindings@~1.2.1
+15 silly cache add parsed spec Result {
+15 silly cache add   raw: 'bindings@~1.2.1',
+15 silly cache add   scope: null,
+15 silly cache add   name: 'bindings',
+15 silly cache add   rawSpec: '~1.2.1',
+15 silly cache add   spec: '>=1.2.1 <1.3.0',
+15 silly cache add   type: 'range' }
+16 silly addNamed bindings@>=1.2.1 <1.3.0
+17 verbose addNamed ">=1.2.1 <1.3.0" is a valid semver range for bindings
+18 silly addNameRange { name: 'bindings', range: '>=1.2.1 <1.3.0', hasData: false }
+19 silly mapToRegistry name bindings
+20 silly mapToRegistry using default registry
+21 silly mapToRegistry registry https://registry.npmjs.org/
+22 silly mapToRegistry uri https://registry.npmjs.org/bindings
+23 verbose addNameRange registry:https://registry.npmjs.org/bindings not in flight; fetching
+24 silly cache add args [ 'nan@^2.0.0', null ]
+25 verbose cache add spec nan@^2.0.0
+26 silly cache add parsed spec Result {
+26 silly cache add   raw: 'nan@^2.0.0',
+26 silly cache add   scope: null,
+26 silly cache add   name: 'nan',
+26 silly cache add   rawSpec: '^2.0.0',
+26 silly cache add   spec: '>=2.0.0 <3.0.0',
+26 silly cache add   type: 'range' }
+27 silly addNamed nan@>=2.0.0 <3.0.0
+28 verbose addNamed ">=2.0.0 <3.0.0" is a valid semver range for nan
+29 silly addNameRange { name: 'nan', range: '>=2.0.0 <3.0.0', hasData: false }
+30 silly mapToRegistry name nan
+31 silly mapToRegistry using default registry
+32 silly mapToRegistry registry https://registry.npmjs.org/
+33 silly mapToRegistry uri https://registry.npmjs.org/nan
+34 verbose addNameRange registry:https://registry.npmjs.org/nan not in flight; fetching
+35 verbose request uri https://registry.npmjs.org/bindings
+36 verbose request no auth needed
+37 info attempt registry request try #1 at 8:55:16 PM
+38 verbose request id b5d5985d8721dcd9
+39 verbose etag "9T1GC8LK3NF0OJU9OPHCFIKS3"
+40 http request GET https://registry.npmjs.org/bindings
+41 verbose request uri https://registry.npmjs.org/nan
+42 verbose request no auth needed
+43 info attempt registry request try #1 at 8:55:16 PM
+44 verbose etag "CJ3ZKOY24CWA1LM0KQ4KE7PG1"
+45 http request GET https://registry.npmjs.org/nan
+46 http 304 https://registry.npmjs.org/nan
+47 verbose headers { date: 'Wed, 11 Nov 2015 19:55:16 GMT',
+47 verbose headers   via: '1.1 varnish',
+47 verbose headers   'cache-control': 'max-age=60',
+47 verbose headers   etag: '"CJ3ZKOY24CWA1LM0KQ4KE7PG1"',
+47 verbose headers   age: '52',
+47 verbose headers   connection: 'keep-alive',
+47 verbose headers   'x-served-by': 'cache-fra1239-FRA',
+47 verbose headers   'x-cache': 'HIT',
+47 verbose headers   'x-cache-hits': '2',
+47 verbose headers   'x-timer': 'S1447271716.887826,VS0,VE0',
+47 verbose headers   vary: 'Accept' }
+48 silly get cb [ 304,
+48 silly get   { date: 'Wed, 11 Nov 2015 19:55:16 GMT',
+48 silly get     via: '1.1 varnish',
+48 silly get     'cache-control': 'max-age=60',
+48 silly get     etag: '"CJ3ZKOY24CWA1LM0KQ4KE7PG1"',
+48 silly get     age: '52',
+48 silly get     connection: 'keep-alive',
+48 silly get     'x-served-by': 'cache-fra1239-FRA',
+48 silly get     'x-cache': 'HIT',
+48 silly get     'x-cache-hits': '2',
+48 silly get     'x-timer': 'S1447271716.887826,VS0,VE0',
+48 silly get     vary: 'Accept' } ]
+49 verbose etag https://registry.npmjs.org/nan from cache
+50 verbose get saving nan to /Users/nacho/.npm/registry.npmjs.org/nan/.cache.json
+51 http 304 https://registry.npmjs.org/bindings
+52 verbose headers { date: 'Wed, 11 Nov 2015 19:55:16 GMT',
+52 verbose headers   via: '1.1 varnish',
+52 verbose headers   'cache-control': 'max-age=60',
+52 verbose headers   etag: '"9T1GC8LK3NF0OJU9OPHCFIKS3"',
+52 verbose headers   age: '45',
+52 verbose headers   connection: 'keep-alive',
+52 verbose headers   'x-served-by': 'cache-fra1243-FRA',
+52 verbose headers   'x-cache': 'HIT',
+52 verbose headers   'x-cache-hits': '2',
+52 verbose headers   'x-timer': 'S1447271716.890541,VS0,VE0',
+52 verbose headers   vary: 'Accept' }
+53 silly get cb [ 304,
+53 silly get   { date: 'Wed, 11 Nov 2015 19:55:16 GMT',
+53 silly get     via: '1.1 varnish',
+53 silly get     'cache-control': 'max-age=60',
+53 silly get     etag: '"9T1GC8LK3NF0OJU9OPHCFIKS3"',
+53 silly get     age: '45',
+53 silly get     connection: 'keep-alive',
+53 silly get     'x-served-by': 'cache-fra1243-FRA',
+53 silly get     'x-cache': 'HIT',
+53 silly get     'x-cache-hits': '2',
+53 silly get     'x-timer': 'S1447271716.890541,VS0,VE0',
+53 silly get     vary: 'Accept' } ]
+54 verbose etag https://registry.npmjs.org/bindings from cache
+55 verbose get saving bindings to /Users/nacho/.npm/registry.npmjs.org/bindings/.cache.json
+56 silly addNameRange number 2 { name: 'nan', range: '>=2.0.0 <3.0.0', hasData: true }
+57 silly addNameRange versions [ 'nan',
+57 silly addNameRange   [ '0.3.0-wip',
+57 silly addNameRange     '0.3.0-wip2',
+57 silly addNameRange     '0.3.0',
+57 silly addNameRange     '0.3.1',
+57 silly addNameRange     '0.3.2',
+57 silly addNameRange     '0.4.0',
+57 silly addNameRange     '0.4.1',
+57 silly addNameRange     '0.4.2',
+57 silly addNameRange     '0.4.3',
+57 silly addNameRange     '0.4.4',
+57 silly addNameRange     '0.5.0',
+57 silly addNameRange     '0.5.1',
+57 silly addNameRange     '0.5.2',
+57 silly addNameRange     '0.6.0',
+57 silly addNameRange     '0.7.0',
+57 silly addNameRange     '0.7.1',
+57 silly addNameRange     '0.8.0',
+57 silly addNameRange     '1.0.0',
+57 silly addNameRange     '1.1.0',
+57 silly addNameRange     '1.1.1',
+57 silly addNameRange     '1.1.2',
+57 silly addNameRange     '1.2.0',
+57 silly addNameRange     '1.3.0',
+57 silly addNameRange     '1.4.0',
+57 silly addNameRange     '1.4.1',
+57 silly addNameRange     '1.5.0',
+57 silly addNameRange     '1.4.2',
+57 silly addNameRange     '1.4.3',
+57 silly addNameRange     '1.5.1',
+57 silly addNameRange     '1.5.2',
+57 silly addNameRange     '1.6.0',
+57 silly addNameRange     '1.5.3',
+57 silly addNameRange     '1.6.1',
+57 silly addNameRange     '1.6.2',
+57 silly addNameRange     '1.7.0',
+57 silly addNameRange     '1.8.0',
+57 silly addNameRange     '1.8.1',
+57 silly addNameRange     '1.8.2',
+57 silly addNameRange     '1.8.3',
+57 silly addNameRange     '1.8.4',
+57 silly addNameRange     '1.9.0',
+57 silly addNameRange     '2.0.0',
+57 silly addNameRange     '2.0.1',
+57 silly addNameRange     '2.0.2',
+57 silly addNameRange     '2.0.3',
+57 silly addNameRange     '2.0.4',
+57 silly addNameRange     '2.0.5',
+57 silly addNameRange     '2.0.6',
+57 silly addNameRange     '2.0.7',
+57 silly addNameRange     '2.0.8',
+57 silly addNameRange     '2.0.9',
+57 silly addNameRange     '2.1.0' ] ]
+58 silly addNamed nan@2.1.0
+59 verbose addNamed "2.1.0" is a plain semver version for nan
+60 silly addNameRange number 2 { name: 'bindings', range: '>=1.2.1 <1.3.0', hasData: true }
+61 silly addNameRange versions [ 'bindings',
+61 silly addNameRange   [ '0.0.1',
+61 silly addNameRange     '0.1.0',
+61 silly addNameRange     '0.1.1',
+61 silly addNameRange     '0.2.0',
+61 silly addNameRange     '0.2.1',
+61 silly addNameRange     '0.2.2',
+61 silly addNameRange     '0.2.3',
+61 silly addNameRange     '0.2.4',
+61 silly addNameRange     '0.3.0',
+61 silly addNameRange     '0.4.0',
+61 silly addNameRange     '1.0.0',
+61 silly addNameRange     '1.1.0',
+61 silly addNameRange     '1.1.1',
+61 silly addNameRange     '1.2.0',
+61 silly addNameRange     '1.2.1' ] ]
+62 silly addNamed bindings@1.2.1
+63 verbose addNamed "1.2.1" is a plain semver version for bindings
+64 silly cache afterAdd bindings@1.2.1
+65 verbose afterAdd /Users/nacho/.npm/bindings/1.2.1/package/package.json not in flight; writing
+66 silly cache afterAdd nan@2.1.0
+67 verbose afterAdd /Users/nacho/.npm/nan/2.1.0/package/package.json not in flight; writing
+68 verbose afterAdd /Users/nacho/.npm/bindings/1.2.1/package/package.json written
+69 verbose afterAdd /Users/nacho/.npm/nan/2.1.0/package/package.json written
+70 silly install resolved [ { name: 'bindings',
+70 silly install resolved     description: 'Helper module for loading your native module\'s .node file',
+70 silly install resolved     keywords: [ 'native', 'addon', 'bindings', 'gyp', 'waf', 'c', 'c++' ],
+70 silly install resolved     version: '1.2.1',
+70 silly install resolved     author:
+70 silly install resolved      { name: 'Nathan Rajlich',
+70 silly install resolved        email: 'nathan@tootallnate.net',
+70 silly install resolved        url: 'http://tootallnate.net' },
+70 silly install resolved     repository:
+70 silly install resolved      { type: 'git',
+70 silly install resolved        url: 'git://github.com/TooTallNate/node-bindings.git' },
+70 silly install resolved     main: './bindings.js',
+70 silly install resolved     bugs: { url: 'https://github.com/TooTallNate/node-bindings/issues' },
+70 silly install resolved     homepage: 'https://github.com/TooTallNate/node-bindings',
+70 silly install resolved     license: 'MIT',
+70 silly install resolved     gitHead: 'e404152ee27f8478ccbc7122ee051246e8e5ec02',
+70 silly install resolved     _id: 'bindings@1.2.1',
+70 silly install resolved     scripts: {},
+70 silly install resolved     _shasum: '14ad6113812d2d37d72e67b4cacb4bb726505f11',
+70 silly install resolved     _from: 'bindings@>=1.2.1 <1.3.0',
+70 silly install resolved     _npmVersion: '1.4.14',
+70 silly install resolved     _npmUser: { name: 'tootallnate', email: 'nathan@tootallnate.net' },
+70 silly install resolved     maintainers: [ [Object], [Object] ],
+70 silly install resolved     dist:
+70 silly install resolved      { shasum: '14ad6113812d2d37d72e67b4cacb4bb726505f11',
+70 silly install resolved        tarball: 'http://registry.npmjs.org/bindings/-/bindings-1.2.1.tgz' },
+70 silly install resolved     directories: {},
+70 silly install resolved     _resolved: 'https://registry.npmjs.org/bindings/-/bindings-1.2.1.tgz',
+70 silly install resolved     readme: 'ERROR: No README data found!' },
+70 silly install resolved   { name: 'nan',
+70 silly install resolved     version: '2.1.0',
+70 silly install resolved     description: 'Native Abstractions for Node.js: C++ header for Node 0.8 -> 4 compatibility',
+70 silly install resolved     main: 'include_dirs.js',
+70 silly install resolved     repository: { type: 'git', url: 'git://github.com/nodejs/nan.git' },
+70 silly install resolved     scripts:
+70 silly install resolved      { test: 'tap --gc test/js/*-test.js',
+70 silly install resolved        'rebuild-tests': 'node-gyp rebuild --msvs_version=2013 --directory test',
+70 silly install resolved        docs: 'doc/.build.sh' },
+70 silly install resolved     contributors:
+70 silly install resolved      [ [Object],
+70 silly install resolved        [Object],
+70 silly install resolved        [Object],
+70 silly install resolved        [Object],
+70 silly install resolved        [Object],
+70 silly install resolved        [Object],
+70 silly install resolved        [Object] ],
+70 silly install resolved     devDependencies:
+70 silly install resolved      { bindings: '~1.2.1',
+70 silly install resolved        commander: '^2.8.1',
+70 silly install resolved        glob: '^5.0.14',
+70 silly install resolved        'node-gyp': '~3.0.1',
+70 silly install resolved        tap: '~0.7.1',
+70 silly install resolved        xtend: '~4.0.0' },
+70 silly install resolved     license: 'MIT',
+70 silly install resolved     bugs: { url: 'https://github.com/nodejs/nan/issues' },
+70 silly install resolved     homepage: 'https://github.com/nodejs/nan#readme',
+70 silly install resolved     _id: 'nan@2.1.0',
+70 silly install resolved     _shasum: '020a7ccedc63fdee85f85967d5607849e74abbe8',
+70 silly install resolved     _resolved: 'https://registry.npmjs.org/nan/-/nan-2.1.0.tgz',
+70 silly install resolved     _from: 'nan@>=2.0.0 <3.0.0',
+70 silly install resolved     _npmVersion: '3.3.5',
+70 silly install resolved     _nodeVersion: '4.1.2',
+70 silly install resolved     _npmUser: { name: 'kkoopa', email: 'bbyholm@abo.fi' },
+70 silly install resolved     dist:
+70 silly install resolved      { shasum: '020a7ccedc63fdee85f85967d5607849e74abbe8',
+70 silly install resolved        tarball: 'http://registry.npmjs.org/nan/-/nan-2.1.0.tgz' },
+70 silly install resolved     maintainers: [ [Object], [Object] ],
+70 silly install resolved     directories: {},
+70 silly install resolved     readme: 'ERROR: No README data found!' } ]
+71 info install bindings@1.2.1 into /Users/nacho/Desastre/nodebindings/nodetk
+72 info install nan@2.1.0 into /Users/nacho/Desastre/nodebindings/nodetk
+73 info installOne bindings@1.2.1
+74 verbose installOne of bindings to /Users/nacho/Desastre/nodebindings/nodetk not in flight; installing
+75 info installOne nan@2.1.0
+76 verbose installOne of nan to /Users/nacho/Desastre/nodebindings/nodetk not in flight; installing
+77 verbose lock using /Users/nacho/.npm/_locks/bindings-7d3e5ba0cb349d5a.lock for /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings
+78 silly install write writing bindings 1.2.1 to /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings
+79 verbose lock using /Users/nacho/.npm/_locks/nan-5a6c987719a72e43.lock for /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan
+80 silly install write writing nan 2.1.0 to /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan
+81 verbose unbuild node_modules/bindings
+82 verbose unbuild node_modules/nan
+83 silly gentlyRm /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings is being purged from base /Users/nacho/Desastre/nodebindings/nodetk
+84 verbose gentlyRm don't care about contents; nuking /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings
+85 verbose tar unpack /Users/nacho/.npm/bindings/1.2.1/package.tgz
+86 verbose tar unpacking to /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings
+87 silly gentlyRm /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings is being purged
+88 verbose gentlyRm don't care about contents; nuking /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings
+89 silly gentlyRm /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan is being purged from base /Users/nacho/Desastre/nodebindings/nodetk
+90 verbose gentlyRm don't care about contents; nuking /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan
+91 silly gunzTarPerm modes [ '755', '644' ]
+92 verbose tar unpack /Users/nacho/.npm/nan/2.1.0/package.tgz
+93 verbose tar unpacking to /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan
+94 silly gentlyRm /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan is being purged
+95 verbose gentlyRm don't care about contents; nuking /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan
+96 silly gunzTarPerm modes [ '755', '644' ]
+97 silly gunzTarPerm extractEntry package.json
+98 silly gunzTarPerm extractEntry package.json
+99 silly gunzTarPerm modified mode [ 'package.json', 436, 420 ]
+100 silly gunzTarPerm extractEntry README.md
+101 silly gunzTarPerm extractEntry bindings.js
+102 silly gunzTarPerm extractEntry README.md
+103 silly gunzTarPerm modified mode [ 'README.md', 436, 420 ]
+104 silly gunzTarPerm extractEntry include_dirs.js
+105 silly gunzTarPerm modified mode [ 'include_dirs.js', 436, 420 ]
+106 silly gunzTarPerm extractEntry nan_converters.h
+107 silly gunzTarPerm modified mode [ 'nan_converters.h', 436, 420 ]
+108 silly gunzTarPerm extractEntry LICENSE.md
+109 silly gunzTarPerm modified mode [ 'LICENSE.md', 436, 420 ]
+110 silly gunzTarPerm extractEntry .dntrc
+111 silly gunzTarPerm modified mode [ '.dntrc', 436, 420 ]
+112 silly gunzTarPerm extractEntry appveyor.yml
+113 silly gunzTarPerm modified mode [ 'appveyor.yml', 436, 420 ]
+114 silly gunzTarPerm extractEntry doc/new.md
+115 silly gunzTarPerm modified mode [ 'doc/new.md', 436, 420 ]
+116 silly gunzTarPerm extractEntry doc/.build.sh
+117 silly gunzTarPerm modified mode [ 'doc/.build.sh', 509, 493 ]
+118 verbose write writing to /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings/package.json
+119 silly gunzTarPerm extractEntry doc/buffers.md
+120 silly gunzTarPerm modified mode [ 'doc/buffers.md', 436, 420 ]
+121 silly gunzTarPerm extractEntry doc/callback.md
+122 silly gunzTarPerm modified mode [ 'doc/callback.md', 436, 420 ]
+123 info preinstall bindings@1.2.1
+124 verbose readDependencies loading dependencies from /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings/package.json
+125 silly gunzTarPerm extractEntry doc/converters.md
+126 silly gunzTarPerm modified mode [ 'doc/converters.md', 436, 420 ]
+127 silly gunzTarPerm extractEntry doc/errors.md
+128 silly gunzTarPerm modified mode [ 'doc/errors.md', 436, 420 ]
+129 verbose readDependencies loading dependencies from /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings/package.json
+130 silly install resolved []
+131 verbose about to build /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings
+132 info build /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings
+133 silly gunzTarPerm extractEntry doc/maybe_types.md
+134 silly gunzTarPerm modified mode [ 'doc/maybe_types.md', 436, 420 ]
+135 silly gunzTarPerm extractEntry doc/methods.md
+136 silly gunzTarPerm modified mode [ 'doc/methods.md', 436, 420 ]
+137 info linkStuff bindings@1.2.1
+138 silly linkStuff bindings@1.2.1 has /Users/nacho/Desastre/nodebindings/nodetk/node_modules as its parent node_modules
+139 verbose linkBins bindings@1.2.1
+140 verbose linkMans bindings@1.2.1
+141 verbose rebuildBundles bindings@1.2.1
+142 info install bindings@1.2.1
+143 info postinstall bindings@1.2.1
+144 silly gunzTarPerm extractEntry doc/asyncworker.md
+145 silly gunzTarPerm modified mode [ 'doc/asyncworker.md', 436, 420 ]
+146 silly gunzTarPerm extractEntry doc/node_misc.md
+147 silly gunzTarPerm modified mode [ 'doc/node_misc.md', 436, 420 ]
+148 verbose unlock done using /Users/nacho/.npm/_locks/bindings-7d3e5ba0cb349d5a.lock for /Users/nacho/Desastre/nodebindings/nodetk/node_modules/bindings
+149 silly gunzTarPerm extractEntry doc/persistent.md
+150 silly gunzTarPerm modified mode [ 'doc/persistent.md', 436, 420 ]
+151 silly gunzTarPerm extractEntry doc/scopes.md
+152 silly gunzTarPerm modified mode [ 'doc/scopes.md', 436, 420 ]
+153 silly gunzTarPerm extractEntry doc/script.md
+154 silly gunzTarPerm modified mode [ 'doc/script.md', 436, 420 ]
+155 silly gunzTarPerm extractEntry doc/string_bytes.md
+156 silly gunzTarPerm modified mode [ 'doc/string_bytes.md', 436, 420 ]
+157 silly gunzTarPerm extractEntry doc/v8_internals.md
+158 silly gunzTarPerm modified mode [ 'doc/v8_internals.md', 436, 420 ]
+159 silly gunzTarPerm extractEntry doc/v8_misc.md
+160 silly gunzTarPerm modified mode [ 'doc/v8_misc.md', 436, 420 ]
+161 silly gunzTarPerm extractEntry nan.h
+162 silly gunzTarPerm modified mode [ 'nan.h', 436, 420 ]
+163 silly gunzTarPerm extractEntry nan_callbacks.h
+164 silly gunzTarPerm modified mode [ 'nan_callbacks.h', 436, 420 ]
+165 silly gunzTarPerm extractEntry nan_callbacks_12_inl.h
+166 silly gunzTarPerm modified mode [ 'nan_callbacks_12_inl.h', 436, 420 ]
+167 silly gunzTarPerm extractEntry nan_callbacks_pre_12_inl.h
+168 silly gunzTarPerm modified mode [ 'nan_callbacks_pre_12_inl.h', 436, 420 ]
+169 silly gunzTarPerm extractEntry nan_converters_43_inl.h
+170 silly gunzTarPerm modified mode [ 'nan_converters_43_inl.h', 436, 420 ]
+171 silly gunzTarPerm extractEntry nan_converters_pre_43_inl.h
+172 silly gunzTarPerm modified mode [ 'nan_converters_pre_43_inl.h', 436, 420 ]
+173 silly gunzTarPerm extractEntry nan_implementation_12_inl.h
+174 silly gunzTarPerm modified mode [ 'nan_implementation_12_inl.h', 436, 420 ]
+175 silly gunzTarPerm extractEntry nan_implementation_pre_12_inl.h
+176 silly gunzTarPerm modified mode [ 'nan_implementation_pre_12_inl.h', 436, 420 ]
+177 silly gunzTarPerm extractEntry nan_maybe_43_inl.h
+178 silly gunzTarPerm modified mode [ 'nan_maybe_43_inl.h', 436, 420 ]
+179 silly gunzTarPerm extractEntry nan_maybe_pre_43_inl.h
+180 silly gunzTarPerm modified mode [ 'nan_maybe_pre_43_inl.h', 436, 420 ]
+181 silly gunzTarPerm extractEntry nan_new.h
+182 silly gunzTarPerm modified mode [ 'nan_new.h', 436, 420 ]
+183 silly gunzTarPerm extractEntry nan_object_wrap.h
+184 silly gunzTarPerm modified mode [ 'nan_object_wrap.h', 436, 420 ]
+185 silly gunzTarPerm extractEntry nan_persistent_12_inl.h
+186 silly gunzTarPerm modified mode [ 'nan_persistent_12_inl.h', 436, 420 ]
+187 silly gunzTarPerm extractEntry nan_persistent_pre_12_inl.h
+188 silly gunzTarPerm modified mode [ 'nan_persistent_pre_12_inl.h', 436, 420 ]
+189 silly gunzTarPerm extractEntry nan_string_bytes.h
+190 silly gunzTarPerm modified mode [ 'nan_string_bytes.h', 436, 420 ]
+191 silly gunzTarPerm extractEntry nan_typedarray_contents.h
+192 silly gunzTarPerm modified mode [ 'nan_typedarray_contents.h', 436, 420 ]
+193 silly gunzTarPerm extractEntry nan_weak.h
+194 silly gunzTarPerm modified mode [ 'nan_weak.h', 436, 420 ]
+195 silly gunzTarPerm extractEntry CHANGELOG.md
+196 silly gunzTarPerm modified mode [ 'CHANGELOG.md', 436, 420 ]
+197 silly gunzTarPerm extractEntry tools/package.json
+198 silly gunzTarPerm modified mode [ 'tools/package.json', 436, 420 ]
+199 silly gunzTarPerm extractEntry tools/README.md
+200 silly gunzTarPerm modified mode [ 'tools/README.md', 436, 420 ]
+201 silly gunzTarPerm extractEntry tools/1to2.js
+202 silly gunzTarPerm modified mode [ 'tools/1to2.js', 509, 493 ]
+203 verbose write writing to /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan/package.json
+204 info preinstall nan@2.1.0
+205 verbose readDependencies loading dependencies from /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan/package.json
+206 verbose readDependencies loading dependencies from /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan/package.json
+207 silly install resolved []
+208 verbose about to build /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan
+209 info build /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan
+210 info linkStuff nan@2.1.0
+211 silly linkStuff nan@2.1.0 has /Users/nacho/Desastre/nodebindings/nodetk/node_modules as its parent node_modules
+212 verbose linkBins nan@2.1.0
+213 verbose linkMans nan@2.1.0
+214 verbose rebuildBundles nan@2.1.0
+215 info install nan@2.1.0
+216 info postinstall nan@2.1.0
+217 verbose unlock done using /Users/nacho/.npm/_locks/nan-5a6c987719a72e43.lock for /Users/nacho/Desastre/nodebindings/nodetk/node_modules/nan
+218 info build /Users/nacho/Desastre/nodebindings/nodetk
+219 info linkStuff nodetk@1.0.0
+220 silly linkStuff nodetk@1.0.0 has /Users/nacho/Desastre/nodebindings as its parent node_modules
+221 verbose linkBins nodetk@1.0.0
+222 verbose linkMans nodetk@1.0.0
+223 verbose rebuildBundles nodetk@1.0.0
+224 verbose rebuildBundles [ 'bindings', 'nan' ]
+225 info install nodetk@1.0.0
+226 verbose unsafe-perm in lifecycle true
+227 info nodetk@1.0.0 Failed to exec install script
+228 verbose stack Error: nodetk@1.0.0 install: `node-gyp rebuild`
+228 verbose stack Exit status 1
+228 verbose stack     at EventEmitter.<anonymous> (/Users/nacho/.nvm/versions/node/v4.2.1/lib/node_modules/npm/lib/utils/lifecycle.js:214:16)
+228 verbose stack     at emitTwo (events.js:87:13)
+228 verbose stack     at EventEmitter.emit (events.js:172:7)
+228 verbose stack     at ChildProcess.<anonymous> (/Users/nacho/.nvm/versions/node/v4.2.1/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+228 verbose stack     at emitTwo (events.js:87:13)
+228 verbose stack     at ChildProcess.emit (events.js:172:7)
+228 verbose stack     at maybeClose (internal/child_process.js:818:16)
+228 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+229 verbose pkgid nodetk@1.0.0
+230 verbose cwd /Users/nacho/Desastre/nodebindings/nodetk
+231 error Darwin 14.3.0
+232 error argv "/Users/nacho/.nvm/versions/node/v4.2.1/bin/node" "/Users/nacho/.nvm/versions/node/v4.2.1/bin/npm" "install"
+233 error node v4.2.1
+234 error npm  v2.14.7
+235 error code ELIFECYCLE
+236 error nodetk@1.0.0 install: `node-gyp rebuild`
+236 error Exit status 1
+237 error Failed at the nodetk@1.0.0 install script 'node-gyp rebuild'.
+237 error This is most likely a problem with the nodetk package,
+237 error not with npm itself.
+237 error Tell the author that this fails on your system:
+237 error     node-gyp rebuild
+237 error You can get their info via:
+237 error     npm owner ls nodetk
+237 error There is likely additional logging output above.
+238 verbose exit [ 1, true ]
