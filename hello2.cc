@@ -7,19 +7,15 @@
 #include <sstream>
 #include <iostream>
 
+using namespace v8;
+
+
 std::string foo;
+Local<Function> cb;
 
 
 int Multi( ClientData Data, Tcl_Interp *interp, int argc, const char *argv[] ) {
     printf("%d\n", argc);
-    long a = strtol(argv[0], (char **)NULL, 10);
-    //long b = strtol(argv[1], (char **)NULL, 10);
-    //std::string number;
-    //std::stringstream strstream;
-    //strstream << a * 4;
-    //strstream >> number;
-    //printf("Hola\n");
-    //printf("%s\n", number.c_str());
 
     std::string feet;
     std::string meters;
@@ -27,8 +23,19 @@ int Multi( ClientData Data, Tcl_Interp *interp, int argc, const char *argv[] ) {
     strstream << Tcl_GetVar(interp, "::feet", 0);
     strstream >> feet;
 
-    meters = "set ::meters "+ feet;
-    std::cout << meters;
+
+    const unsigned nargc = 1;
+    Local<Value> nargv[nargc] = { Nan::New(feet).ToLocalChecked() };
+    Nan::MakeCallback(Nan::GetCurrentContext()->Global(), cb, nargc, nargv);
+//    Nan::CallAsFunction(Nan::GetCurrentContext()->Global(), cb, nargc, nargv);
+    //Local<Value> res = Nan::CallAsFunction(Nan::GetCurrentContext()->Global(), cb, nargc, nargv);
+    Handle<Value> js_result;
+    js_result = cb->Call(Nan::GetCurrentContext()->Global(), nargc, nargv);
+    String::Utf8Value bar(js_result->ToString());
+
+    std::string met(*bar);
+
+    meters = "set ::meters "+ met;
     Tcl_Eval(interp, meters.c_str());
 
     return 0;
@@ -62,10 +69,10 @@ int InitProc( Tcl_Interp *interp )
 char *ppszArg[1]; 
 
 
-void RunTclTk(const Nan::FunctionCallbackInfo<v8::Value>& info) {
+void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
 
 
-    if (info.Length() > 1) {
+    if (info.Length() > 2) {
         Nan::ThrowTypeError("Wrong number of arguments");
         return;
     }
@@ -75,8 +82,17 @@ void RunTclTk(const Nan::FunctionCallbackInfo<v8::Value>& info) {
         return;
     }
 
-    v8::String::Utf8Value param1(info[0]->ToString());
+    if (!info[1]->IsFunction()) {
+        Nan::ThrowTypeError("Wrong arguments");
+        return;
+    }
+
+    String::Utf8Value param1(info[0]->ToString());
+    String::Utf8Value param2(info[1]->ToString());
     foo = std::string(*param1); 
+    std::cout << std::string(*param2); 
+
+    cb = Local<Function>::Cast(info[1]);
 
     char *ppszArg[1]; 
 
@@ -90,10 +106,10 @@ void RunTclTk(const Nan::FunctionCallbackInfo<v8::Value>& info) {
     //info.GetReturnValue().Set(Nan::New("world").ToLocalChecked());
 }
 
-void Init(v8::Local<v8::Object> exports) {
+void Init(Local<Object> exports) {
 
     exports->Set(Nan::New("tk").ToLocalChecked(),
-            Nan::New<v8::FunctionTemplate>(RunTclTk)->GetFunction());
+            Nan::New<FunctionTemplate>(RunTclTk)->GetFunction());
 }
 
 NODE_MODULE(hello, Init)
