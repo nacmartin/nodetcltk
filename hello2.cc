@@ -62,7 +62,9 @@ int InitProc( Tcl_Interp *interp )
     printf("Hola\n");
 
     Tcl_CreateCommand(interp, "multi", Multi, (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL );
+    printf("Hola\n");
     Tcl_Eval(interp, foo.c_str());//"grid [ttk::button .b -text \"Hello World\"]; console hide ");
+    printf("Hola\n");
     return TCL_OK;
 } // end InitProc
 
@@ -102,7 +104,19 @@ void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
 
 //    Tcl_Interp *interp = Tcl_CreateInterp();
 //    InitProc(interp);
-    Tk_Main(1, ppszArg, InitProc);
+    Tcl_Interp *interp;
+    interp = Tcl_CreateInterp();
+    printf("interp\n");
+    //Tcl_Init(interp);
+    InitProc(interp);
+//    Tk_MainLoop();
+    // Tk Mainlooop
+    while (Tk_GetNumMainWindows() > 0) {
+        printf("do one\n");
+        Tcl_DoOneEvent(0);
+    }
+
+//    Tk_Main(1, ppszArg, InitProc);
     //info.GetReturnValue().Set(Nan::New("world").ToLocalChecked());
 }
 
