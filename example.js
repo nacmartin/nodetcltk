@@ -10,7 +10,7 @@ var toMeters = function () {
 }
 //addon.tkInit(program, toMeters);
 nodetk.init();
-nodetk.createCommand(toMeters);
+nodetk.createCommand('multi', toMeters);
 nodetk.eval(program);
 
 console.log("can execute code after tk init");
