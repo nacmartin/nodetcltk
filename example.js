@@ -10,9 +10,7 @@ var toMeters = function (feet) {
 }
 //addon.tkInit(program, toMeters);
 nodetk.init();
-console.log("init");
-nodetk.command(program);
 nodetk.defineFunction(toMeters);
-console.log("init2");
+nodetk.command(program);
 
 console.log("can execute code after tk init");

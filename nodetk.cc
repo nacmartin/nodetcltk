@@ -10,9 +10,11 @@
 using namespace v8;
 
 
-std::string foo;
 uv_idle_t idler;
 Persistent<Function, CopyablePersistentTraits<Function>> cb;
+
+
+
 static Tcl_Interp *interp;
 
 char *ppszArg[1]; 
@@ -68,47 +70,6 @@ int InitProc( Tcl_Interp *localInterp )
     return TCL_OK;
 }
 
-
-void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
-
-
-    if (info.Length() > 2) {
-        Nan::ThrowTypeError("Wrong number of arguments");
-        return;
-    }
-
-    if (!info[0]->IsString()) {
-        Nan::ThrowTypeError("Wrong arguments");
-        return;
-    }
-
-    if (!info[1]->IsFunction()) {
-        Nan::ThrowTypeError("Wrong arguments");
-        return;
-    }
-
-    String::Utf8Value param1(info[0]->ToString());
-    foo = std::string(*param1); 
-
-    v8::Isolate* isolate = v8::Isolate::GetCurrent();
-
-    Local<Function> localCb = Local<Function>::Cast(info[1]);
-    cb.Reset(isolate, localCb);
-
-    char *ppszArg[1]; 
-
-    // allocate strings and set their contents
-    ppszArg[0] = (char *) foo.c_str();
-
-    interp = Tcl_CreateInterp();
-
-    InitProc(interp);
-
-    uv_idle_init(uv_default_loop(), &idler);
-    uv_idle_start(&idler, wait_for_a_while);
-
-}
-
 void InitTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
     if (info.Length() > 0) {
         Nan::ThrowTypeError("Wrong number of arguments");
@@ -135,8 +96,8 @@ void RunCommand(const Nan::FunctionCallbackInfo<Value>& info) {
     }
 
     String::Utf8Value param1(info[0]->ToString());
-    foo = std::string(*param1); 
-    Tcl_Eval(interp, foo.c_str());
+    std::string command = std::string(*param1); 
+    Tcl_Eval(interp, command.c_str());
 }
 
 void DefineFunction(const Nan::FunctionCallbackInfo<Value>& info) {
