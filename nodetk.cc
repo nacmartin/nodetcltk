@@ -13,8 +13,6 @@ using namespace v8;
 uv_idle_t idler;
 Persistent<Function, CopyablePersistentTraits<Function>> cb;
 
-
-
 static Tcl_Interp *interp;
 
 char *ppszArg[1]; 
@@ -41,9 +39,13 @@ int Multi( ClientData Data, Tcl_Interp *localInterp, int argc, const char *argv[
     const unsigned nargc = 1;
     Local<Value> nargv[nargc] = { Nan::New(feet).ToLocalChecked() };
     Handle<Value> js_result;
+
+    // call persistent function
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
     v8::Local<v8::Function> localCb = v8::Local<v8::Function>::New(isolate, cb);
     js_result = localCb->Call(Nan::GetCurrentContext()->Global(), nargc, nargv);
+
+    // cast result
     String::Utf8Value bar(js_result->ToString());
 
     std::string met(*bar);
@@ -84,7 +86,7 @@ void InitTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
     uv_idle_start(&idler, wait_for_a_while);
 }
 
-void RunCommand(const Nan::FunctionCallbackInfo<Value>& info) {
+void TclEval(const Nan::FunctionCallbackInfo<Value>& info) {
     if (info.Length() > 1) {
         Nan::ThrowTypeError("Wrong number of arguments");
         return;
@@ -100,7 +102,7 @@ void RunCommand(const Nan::FunctionCallbackInfo<Value>& info) {
     Tcl_Eval(interp, command.c_str());
 }
 
-void DefineFunction(const Nan::FunctionCallbackInfo<Value>& info) {
+void TclCreateCommand(const Nan::FunctionCallbackInfo<Value>& info) {
     if (info.Length() > 1) {
         Nan::ThrowTypeError("Wrong number of arguments");
         return;
@@ -124,10 +126,10 @@ void Init(Local<Object> exports) {
 
     exports->Set(Nan::New("init").ToLocalChecked(),
             Nan::New<FunctionTemplate>(InitTclTk)->GetFunction());
-    exports->Set(Nan::New("command").ToLocalChecked(),
-            Nan::New<FunctionTemplate>(RunCommand)->GetFunction());
-    exports->Set(Nan::New("defineFunction").ToLocalChecked(),
-            Nan::New<FunctionTemplate>(DefineFunction)->GetFunction());
+    exports->Set(Nan::New("eval").ToLocalChecked(),
+            Nan::New<FunctionTemplate>(TclEval)->GetFunction());
+    exports->Set(Nan::New("createCommand").ToLocalChecked(),
+            Nan::New<FunctionTemplate>(TclCreateCommand)->GetFunction());
 }
 
 NODE_MODULE(nodetk, Init)
