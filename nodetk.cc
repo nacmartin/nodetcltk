@@ -17,7 +17,7 @@ static Tcl_Interp *interp;
 
 char *ppszArg[1]; 
 
-void wait_for_a_while(uv_idle_t* handle) {
+void StartLoop(uv_idle_t* handle) {
     while (Tk_GetNumMainWindows() > 0) {
         Tcl_DoOneEvent(TCL_DONT_WAIT);
     }
@@ -83,7 +83,7 @@ void InitTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
     InitProc(interp);
 
     uv_idle_init(uv_default_loop(), &idler);
-    uv_idle_start(&idler, wait_for_a_while);
+    uv_idle_start(&idler, StartLoop);
 }
 
 void TclEval(const Nan::FunctionCallbackInfo<Value>& info) {
@@ -119,8 +119,29 @@ void TclCreateCommand(const Nan::FunctionCallbackInfo<Value>& info) {
     cb.Reset(isolate, localCb);
 
     Tcl_CreateCommand(interp, "multi", Multi, (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL );
-
 }
+
+void TclGetVar(const Nan::FunctionCallbackInfo<Value>& info) {
+    if (info.Length() > 1) {
+        Nan::ThrowTypeError("Wrong number of arguments");
+        return;
+    }
+
+    if (!info[0]->IsString()) {
+        Nan::ThrowTypeError("Wrong arguments");
+        return;
+    }
+
+    String::Utf8Value param(info[0]->ToString());
+    std::string command = std::string(*param); 
+    std::stringstream strstream;
+    std::string doublecolon = "::";
+    std::string valueholder;
+    strstream << Tcl_GetVar(interp, (doublecolon+command).c_str(), 0);
+    strstream >> valueholder;
+    info.GetReturnValue().Set(Nan::New(valueholder).ToLocalChecked());
+}
+
 
 void Init(Local<Object> exports) {
 
@@ -130,6 +151,8 @@ void Init(Local<Object> exports) {
             Nan::New<FunctionTemplate>(TclEval)->GetFunction());
     exports->Set(Nan::New("createCommand").ToLocalChecked(),
             Nan::New<FunctionTemplate>(TclCreateCommand)->GetFunction());
+    exports->Set(Nan::New("getVar").ToLocalChecked(),
+            Nan::New<FunctionTemplate>(TclGetVar)->GetFunction());
 }
 
 NODE_MODULE(nodetk, Init)
