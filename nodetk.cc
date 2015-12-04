@@ -13,6 +13,7 @@ using namespace v8;
 std::string foo;
 uv_idle_t idler;
 Persistent<Function, CopyablePersistentTraits<Function>> cb;
+static Tcl_Interp *interp;
 
 char *ppszArg[1]; 
 
@@ -25,7 +26,7 @@ void wait_for_a_while(uv_idle_t* handle) {
     uv_idle_stop(handle);
 }
 
-int Multi( ClientData Data, Tcl_Interp *interp, int argc, const char *argv[] ) {
+int Multi( ClientData Data, Tcl_Interp *localInterp, int argc, const char *argv[] ) {
 
     std::string feet;
     std::string meters;
@@ -46,25 +47,24 @@ int Multi( ClientData Data, Tcl_Interp *interp, int argc, const char *argv[] ) {
     std::string met(*bar);
 
     meters = "set ::meters "+ met;
-    Tcl_Eval(interp, meters.c_str());
+    Tcl_Eval(localInterp, meters.c_str());
 
     return 0;
 }
 
-int InitProc( Tcl_Interp *interp )
+int InitProc( Tcl_Interp *localInterp )
 {
     /* Basic init */
-    if (Tcl_Init(interp) == TCL_ERROR)
+    if (Tcl_Init(localInterp) == TCL_ERROR)
         return TCL_ERROR;
-    if (Tk_Init(interp) == TCL_ERROR)
+    if (Tk_Init(localInterp) == TCL_ERROR)
         return TCL_ERROR;
-    Tcl_StaticPackage(interp, "Tk", Tk_Init, Tk_SafeInit);
+    Tcl_StaticPackage(localInterp, "Tk", Tk_Init, Tk_SafeInit);
     /* Make your commands here */
     //Tcl_CreateCommand(interp, "set_parser",           SET_Parser, NULL, NULL);
     /* Read your startup code */
 
-    Tcl_CreateCommand(interp, "multi", Multi, (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL );
-    Tcl_Eval(interp, foo.c_str());//"grid [ttk::button .b -text \"Hello World\"]; console hide ");
+    Tcl_Eval(localInterp, "");
     return TCL_OK;
 }
 
@@ -88,7 +88,6 @@ void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
     }
 
     String::Utf8Value param1(info[0]->ToString());
-    String::Utf8Value param2(info[1]->ToString());
     foo = std::string(*param1); 
 
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
@@ -101,7 +100,6 @@ void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
     // allocate strings and set their contents
     ppszArg[0] = (char *) foo.c_str();
 
-    Tcl_Interp *interp;
     interp = Tcl_CreateInterp();
 
     InitProc(interp);
@@ -111,10 +109,64 @@ void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
 
 }
 
-void Init(Local<Object> exports) {
+void InitTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
+    if (info.Length() > 0) {
+        Nan::ThrowTypeError("Wrong number of arguments");
+        return;
+    }
 
-    exports->Set(Nan::New("tk").ToLocalChecked(),
-            Nan::New<FunctionTemplate>(RunTclTk)->GetFunction());
+    interp = Tcl_CreateInterp();
+
+    InitProc(interp);
+
+    uv_idle_init(uv_default_loop(), &idler);
+    uv_idle_start(&idler, wait_for_a_while);
 }
 
-NODE_MODULE(hello, Init)
+void RunCommand(const Nan::FunctionCallbackInfo<Value>& info) {
+    if (info.Length() > 1) {
+        Nan::ThrowTypeError("Wrong number of arguments");
+        return;
+    }
+
+    if (!info[0]->IsString()) {
+        Nan::ThrowTypeError("Wrong arguments");
+        return;
+    }
+
+    String::Utf8Value param1(info[0]->ToString());
+    foo = std::string(*param1); 
+    Tcl_Eval(interp, foo.c_str());
+}
+
+void DefineFunction(const Nan::FunctionCallbackInfo<Value>& info) {
+    if (info.Length() > 1) {
+        Nan::ThrowTypeError("Wrong number of arguments");
+        return;
+    }
+
+    if (!info[0]->IsFunction()) {
+        Nan::ThrowTypeError("Wrong arguments");
+        return;
+    }
+
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
+    Local<Function> localCb = Local<Function>::Cast(info[0]);
+    cb.Reset(isolate, localCb);
+
+    Tcl_CreateCommand(interp, "multi", Multi, (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL );
+
+}
+
+void Init(Local<Object> exports) {
+
+    exports->Set(Nan::New("init").ToLocalChecked(),
+            Nan::New<FunctionTemplate>(InitTclTk)->GetFunction());
+    exports->Set(Nan::New("command").ToLocalChecked(),
+            Nan::New<FunctionTemplate>(RunCommand)->GetFunction());
+    exports->Set(Nan::New("defineFunction").ToLocalChecked(),
+            Nan::New<FunctionTemplate>(DefineFunction)->GetFunction());
+}
+
+NODE_MODULE(nodetk, Init)
