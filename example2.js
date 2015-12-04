@@ -58,18 +58,18 @@ nodetk.eval("bind $::lbox <<ListboxSelect>> \"showPopulation\";");
 nodetk.eval("bind $::lbox <Double-1> \"sendGift\";");
 nodetk.eval("bind . <Return> \"sendGift\";");
 
-//nodetk.createCommand('showPopulation', function() {
-//    var idx = nodetk.eval("$::lbox curselection");
-//
-//    if (idx) {
-//        var code = nodetk.eval(`lindex $::countrycodes ${idx};`);
-//        var name = countries[idx].name;
-//        var population = countries[idx].population;
-//        nodetk.eval(`set ::statusmsg "The population of ${name} (${code}) is ${population}";`);
-//    }
-//
-//    nodetk.eval("set ::sentmsg \"\";");
-//});
+nodetk.createCommand('showPopulation', function() {
+    var idx = nodetk.eval("$::lbox curselection");
+
+    if (idx) {
+        var code = nodetk.eval(`lindex $::countrycodes ${idx};`);
+        var name = countries[idx].name;
+        var population = countries[idx].population;
+        nodetk.eval(`set ::statusmsg "The population of ${name} (${code}) is ${population}";`);
+    }
+
+    nodetk.eval("set ::sentmsg \"\";");
+});
 
 nodetk.createCommand('sendGift', function() {
     var idx = nodetk.eval("$::lbox curselection");
