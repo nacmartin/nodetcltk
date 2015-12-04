@@ -11,10 +11,24 @@ using namespace v8;
 
 
 std::string foo;
-Local<Function> cb;
-uv_idle_t            idler;
+uv_idle_t idler;
+Persistent<Function, CopyablePersistentTraits<Function>> cb;
 
 char *ppszArg[1]; 
+
+//class TkCallback {
+//    public:
+//        bool initialized = false;
+//        TkCallback();
+//};
+//
+//TkCallback::TkCallback(void)
+//{
+//    this->initialized = true;
+//}
+//
+//
+//TkCallback Callback = TkCallback();
 
 void wait_for_a_while(uv_idle_t* handle) {
     while (Tk_GetNumMainWindows() > 0) {
@@ -25,7 +39,6 @@ void wait_for_a_while(uv_idle_t* handle) {
 }
 
 int Multi( ClientData Data, Tcl_Interp *interp, int argc, const char *argv[] ) {
-    printf("%d\n", argc);
 
     std::string feet;
     std::string meters;
@@ -34,22 +47,19 @@ int Multi( ClientData Data, Tcl_Interp *interp, int argc, const char *argv[] ) {
     strstream >> feet;
 
     printf("uno\n");
+    Nan::HandleScope scope;
 
     const unsigned nargc = 1;
     Local<Value> nargv[nargc] = { Nan::New(feet).ToLocalChecked() };
-    Nan::MakeCallback(Nan::GetCurrentContext()->Global(), cb, nargc, nargv);
-    printf("dos\n");
-//    Nan::CallAsFunction(Nan::GetCurrentContext()->Global(), cb, nargc, nargv);
-    //Local<Value> res = Nan::CallAsFunction(Nan::GetCurrentContext()->Global(), cb, nargc, nargv);
     Handle<Value> js_result;
-    js_result = cb->Call(Nan::GetCurrentContext()->Global(), nargc, nargv);
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    v8::Local<v8::Function> localCb = v8::Local<v8::Function>::New(isolate, cb);
+    js_result = localCb->Call(Nan::GetCurrentContext()->Global(), nargc, nargv);
     String::Utf8Value bar(js_result->ToString());
-    printf("tres\n");
 
     std::string met(*bar);
 
     meters = "set ::meters "+ met;
-    printf("cuatro\n");
     Tcl_Eval(interp, meters.c_str());
 
     return 0;
@@ -96,7 +106,13 @@ void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
     foo = std::string(*param1); 
     std::cout << std::string(*param2); 
 
-    cb = Local<Function>::Cast(info[1]);
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
+    Local<Function> localCb = Local<Function>::Cast(info[1]);
+    printf("localcb is %x\n", localCb);
+    cb.Reset(isolate, localCb);
+//    v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> cb(isolate, localCb);
+//    cb = Nan::Persistent<v8::Function>::New(isolate, localCb);
 
     char *ppszArg[1]; 
 
@@ -105,17 +121,17 @@ void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
 
     Tcl_Interp *interp;
     interp = Tcl_CreateInterp();
-    InitProc(interp);
 
+    InitProc(interp);
 
     uv_idle_init(uv_default_loop(), &idler);
     // This segfaults
-    //uv_idle_start(&idler, wait_for_a_while);
+    uv_idle_start(&idler, wait_for_a_while);
 
     // This works
-    while (Tk_GetNumMainWindows() > 0) {
-        Tcl_DoOneEvent(TCL_DONT_WAIT);
-    }
+    //while (Tk_GetNumMainWindows() > 0) {
+    //    Tcl_DoOneEvent(TCL_DONT_WAIT);
+    //}
 
 }
 
