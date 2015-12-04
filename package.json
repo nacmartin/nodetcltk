@@ -1,5 +1,5 @@
 {
-  "name": "nodetk",
+  "name": "nodetcltk",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nacmartin/nodetk.git"
+    "url": "git+https://github.com/nacmartin/nodetcltk.git"
   },
   "keywords": [
     "tcl",
@@ -16,10 +16,10 @@
     "tcl/tk",
     "gui"
   ],
-  "author": "nacmartin",
+  "author": "Nacho Martin <nacho@limenius.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nacmartin/nodetk/issues"
+    "url": "https://github.com/nacmartin/nodetcltk/issues"
   },
   "dependencies": {
     "bindings": "~1.2.1",
