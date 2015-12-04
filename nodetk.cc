@@ -13,7 +13,6 @@ using namespace v8;
 
 
 uv_idle_t idler;
-Persistent<Function, CopyablePersistentTraits<Function>> cb;
 
 std::unordered_map <std::string, Persistent<Function, CopyablePersistentTraits<Function>>> callbacks;
 
@@ -25,8 +24,10 @@ void StartLoop(uv_idle_t* handle) {
     while (Tk_GetNumMainWindows() > 0) {
         Tcl_DoOneEvent(TCL_DONT_WAIT);
     }
+    for(auto kv : callbacks) {
+        callbacks[kv.first].Empty();
+    } 
     printf("good bye\n");
-    cb.Empty();
     uv_idle_stop(handle);
 }
 
@@ -71,6 +72,7 @@ void TclEval(const Nan::FunctionCallbackInfo<Value>& info) {
     String::Utf8Value param1(info[0]->ToString());
     std::string command = std::string(*param1); 
     Tcl_Eval(interp, command.c_str());
+    info.GetReturnValue().Set(Nan::New(interp->result).ToLocalChecked());
 }
 
 void TclCreateCommand(const Nan::FunctionCallbackInfo<Value>& info) {
@@ -96,8 +98,7 @@ void TclCreateCommand(const Nan::FunctionCallbackInfo<Value>& info) {
     Local<Function> localCb = Local<Function>::Cast(info[1]);
     Persistent<Function> pcb;
     callbacks[std::string(*name)] = pcb;
-
-    cb.Reset(isolate, localCb);
+    callbacks[std::string(*name)].Reset(isolate, localCb);
 
     auto autocb = [] (ClientData Data, Tcl_Interp *localInterp, int argc, const char *argv[]) {
         Nan::HandleScope scope;
@@ -108,7 +109,8 @@ void TclCreateCommand(const Nan::FunctionCallbackInfo<Value>& info) {
 
         // call persistent function
         v8::Isolate* isolate = v8::Isolate::GetCurrent();
-        v8::Local<v8::Function> localCb = v8::Local<v8::Function>::New(isolate, cb);
+
+        v8::Local<v8::Function> localCb = v8::Local<v8::Function>::New(isolate, callbacks[argv[0]]);
         localCb->Call(Nan::GetCurrentContext()->Global(), nargc, nargv);
 
         return 0;
@@ -128,11 +130,10 @@ void TclGetVar(const Nan::FunctionCallbackInfo<Value>& info) {
     }
 
     String::Utf8Value param(info[0]->ToString());
-    std::string command = std::string(*param); 
+    std::string var = std::string(*param); 
     std::stringstream strstream;
-    std::string doublecolon = "::";
     std::string valueholder;
-    strstream << Tcl_GetVar(interp, (doublecolon+command).c_str(), 0);
+    strstream << Tcl_GetVar(interp, var.c_str(), 0);
     strstream >> valueholder;
     info.GetReturnValue().Set(Nan::New(valueholder).ToLocalChecked());
 }
@@ -149,5 +150,6 @@ void Init(Local<Object> exports) {
     exports->Set(Nan::New("getVar").ToLocalChecked(),
             Nan::New<FunctionTemplate>(TclGetVar)->GetFunction());
 }
+
 
 NODE_MODULE(nodetk, Init)
