@@ -41,14 +41,6 @@ int Multi( ClientData Data, Tcl_Interp *localInterp, int argc, const char *argv[
     v8::Local<v8::Function> localCb = v8::Local<v8::Function>::New(isolate, cb);
     js_result = localCb->Call(Nan::GetCurrentContext()->Global(), nargc, nargv);
 
-    // cast result
-    String::Utf8Value bar(js_result->ToString());
-
-    std::string met(*bar);
-
-    meters = "set ::meters "+ met;
-    Tcl_Eval(localInterp, meters.c_str());
-
     return 0;
 }
 
