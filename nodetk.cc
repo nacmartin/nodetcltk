@@ -28,16 +28,12 @@ void StartLoop(uv_idle_t* handle) {
 
 int Multi( ClientData Data, Tcl_Interp *localInterp, int argc, const char *argv[] ) {
 
-    std::string feet;
     std::string meters;
-    std::stringstream strstream;
-    strstream << Tcl_GetVar(interp, "::feet", 0);
-    strstream >> feet;
 
     Nan::HandleScope scope;
 
-    const unsigned nargc = 1;
-    Local<Value> nargv[nargc] = { Nan::New(feet).ToLocalChecked() };
+    const unsigned nargc = 0;
+    Local<Value> nargv[nargc] = {  };
     Handle<Value> js_result;
 
     // call persistent function
