@@ -54,6 +54,7 @@ void InitTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
 
     InitProc(interp);
 
+    // Probably better to create a Tk_CreateEventHandler
     uv_idle_init(uv_default_loop(), &idler);
     uv_idle_start(&idler, StartLoop);
 }
