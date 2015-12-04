@@ -1,8 +1,8 @@
 {
   "targets": [
     {
-      "target_name": "hello2",
-      "sources": [ "hello2.cc"],
+      "target_name": "nodetk",
+      "sources": [ "nodetk.cc"],
       "libraries": [
           "-ltcl",
           "-ltk"

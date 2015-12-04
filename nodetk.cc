@@ -16,25 +16,12 @@ Persistent<Function, CopyablePersistentTraits<Function>> cb;
 
 char *ppszArg[1]; 
 
-//class TkCallback {
-//    public:
-//        bool initialized = false;
-//        TkCallback();
-//};
-//
-//TkCallback::TkCallback(void)
-//{
-//    this->initialized = true;
-//}
-//
-//
-//TkCallback Callback = TkCallback();
-
 void wait_for_a_while(uv_idle_t* handle) {
     while (Tk_GetNumMainWindows() > 0) {
         Tcl_DoOneEvent(TCL_DONT_WAIT);
     }
     printf("good bye\n");
+    cb.Empty();
     uv_idle_stop(handle);
 }
 
@@ -46,7 +33,6 @@ int Multi( ClientData Data, Tcl_Interp *interp, int argc, const char *argv[] ) {
     strstream << Tcl_GetVar(interp, "::feet", 0);
     strstream >> feet;
 
-    printf("uno\n");
     Nan::HandleScope scope;
 
     const unsigned nargc = 1;
@@ -104,15 +90,11 @@ void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
     String::Utf8Value param1(info[0]->ToString());
     String::Utf8Value param2(info[1]->ToString());
     foo = std::string(*param1); 
-    std::cout << std::string(*param2); 
 
     v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
     Local<Function> localCb = Local<Function>::Cast(info[1]);
-    printf("localcb is %x\n", localCb);
     cb.Reset(isolate, localCb);
-//    v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function>> cb(isolate, localCb);
-//    cb = Nan::Persistent<v8::Function>::New(isolate, localCb);
 
     char *ppszArg[1]; 
 
@@ -125,13 +107,7 @@ void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
     InitProc(interp);
 
     uv_idle_init(uv_default_loop(), &idler);
-    // This segfaults
     uv_idle_start(&idler, wait_for_a_while);
-
-    // This works
-    //while (Tk_GetNumMainWindows() > 0) {
-    //    Tcl_DoOneEvent(TCL_DONT_WAIT);
-    //}
 
 }
 
