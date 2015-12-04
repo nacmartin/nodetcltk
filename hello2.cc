@@ -12,7 +12,17 @@ using namespace v8;
 
 std::string foo;
 Local<Function> cb;
+uv_idle_t            idler;
 
+char *ppszArg[1]; 
+
+void wait_for_a_while(uv_idle_t* handle) {
+    while (Tk_GetNumMainWindows() > 0) {
+        Tcl_DoOneEvent(TCL_DONT_WAIT);
+    }
+    printf("good bye\n");
+    uv_idle_stop(handle);
+}
 
 int Multi( ClientData Data, Tcl_Interp *interp, int argc, const char *argv[] ) {
     printf("%d\n", argc);
@@ -23,29 +33,26 @@ int Multi( ClientData Data, Tcl_Interp *interp, int argc, const char *argv[] ) {
     strstream << Tcl_GetVar(interp, "::feet", 0);
     strstream >> feet;
 
+    printf("uno\n");
 
     const unsigned nargc = 1;
     Local<Value> nargv[nargc] = { Nan::New(feet).ToLocalChecked() };
     Nan::MakeCallback(Nan::GetCurrentContext()->Global(), cb, nargc, nargv);
+    printf("dos\n");
 //    Nan::CallAsFunction(Nan::GetCurrentContext()->Global(), cb, nargc, nargv);
     //Local<Value> res = Nan::CallAsFunction(Nan::GetCurrentContext()->Global(), cb, nargc, nargv);
     Handle<Value> js_result;
     js_result = cb->Call(Nan::GetCurrentContext()->Global(), nargc, nargv);
     String::Utf8Value bar(js_result->ToString());
+    printf("tres\n");
 
     std::string met(*bar);
 
     meters = "set ::meters "+ met;
+    printf("cuatro\n");
     Tcl_Eval(interp, meters.c_str());
 
     return 0;
-    //std::string number;
-    //std::stringstream strstream;
-    //strstream << a * b;
-    //strstream >> number;
-    //char *args[1]; 
-    //args[0] = (char *) number.c_str();
-    //return args;
 }
 
 int InitProc( Tcl_Interp *interp )
@@ -59,16 +66,11 @@ int InitProc( Tcl_Interp *interp )
     /* Make your commands here */
     //Tcl_CreateCommand(interp, "set_parser",           SET_Parser, NULL, NULL);
     /* Read your startup code */
-    printf("Hola\n");
 
     Tcl_CreateCommand(interp, "multi", Multi, (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL );
-    printf("Hola\n");
     Tcl_Eval(interp, foo.c_str());//"grid [ttk::button .b -text \"Hello World\"]; console hide ");
-    printf("Hola\n");
     return TCL_OK;
-} // end InitProc
-
-char *ppszArg[1]; 
+}
 
 
 void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
@@ -100,24 +102,21 @@ void RunTclTk(const Nan::FunctionCallbackInfo<Value>& info) {
 
     // allocate strings and set their contents
     ppszArg[0] = (char *) foo.c_str();
-//    strcpy( ppszArg[0], "" );
 
-//    Tcl_Interp *interp = Tcl_CreateInterp();
-//    InitProc(interp);
     Tcl_Interp *interp;
     interp = Tcl_CreateInterp();
-    printf("interp\n");
-    //Tcl_Init(interp);
     InitProc(interp);
-//    Tk_MainLoop();
-    // Tk Mainlooop
+
+
+    uv_idle_init(uv_default_loop(), &idler);
+    // This segfaults
+    //uv_idle_start(&idler, wait_for_a_while);
+
+    // This works
     while (Tk_GetNumMainWindows() > 0) {
-        printf("do one\n");
-        Tcl_DoOneEvent(0);
+        Tcl_DoOneEvent(TCL_DONT_WAIT);
     }
 
-//    Tk_Main(1, ppszArg, InitProc);
-    //info.GetReturnValue().Set(Nan::New("world").ToLocalChecked());
 }
 
 void Init(Local<Object> exports) {
