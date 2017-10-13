@@ -22,7 +22,7 @@ char *ppszArg[1];
 
 void StartLoop(uv_idle_t* handle) {
     while (Tk_GetNumMainWindows() > 0) {
-        Tcl_DoOneEvent(TCL_DONT_WAIT);
+        Tcl_DoOneEvent(0);
     }
     for(auto kv : callbacks) {
         callbacks[kv.first].Empty();
