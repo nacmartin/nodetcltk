@@ -1,4 +1,5 @@
-var nodetk = require('bindings')('nodetk');
+//var nodetk = require('bindings')('nodetk');
+var nodetk = require('./index.js');
 
 nodetk.init();
 nodetk.eval("wm title . \"Feet to Meters\";");

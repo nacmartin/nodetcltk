@@ -1,4 +1,4 @@
-var nodetk = require('bindings')('nodetk');
+var nodetk = require('./index.js');
 
 var countries = [
     {code: 'ar', name: 'Argentina', population: '41000000'},
